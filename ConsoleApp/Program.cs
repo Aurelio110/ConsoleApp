@@ -1,8 +1,56 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Numerics;
+using static System.Net.Mime.MediaTypeNames;
 namespace ConsoleApp
 {
+    class Duplicate
+    {
+        public static void duplicate()
+        {
+            Console.WriteLine("Please enter some numbers separated with a hyphen to check if there are duplicates: \n");          
+            string numbers = Console.ReadLine();
+
+            if (String.IsNullOrWhiteSpace(numbers))
+            {
+                return;
+            }
+
+            List<string> numbersList = new List<string>(numbers.Split('-'));
+            var groups = numbersList.GroupBy(names => names);
+
+            foreach (var group in groups)
+            {
+                if (group.Count() > 1) Console.WriteLine("\nDuplicate");
+            }
+        }
+    }
+    class Consecutive
+    {
+        public static void consecutive()
+        {
+            Console.WriteLine("Please enter some numbers separated with a hyphen to check if they are consecutive: ");
+            
+            
+            string numbers = Console.ReadLine();
+
+            List<int> numbersList = new List<int>(Array.ConvertAll(numbers.Split('-'), int.Parse));
+            
+            int lastListIndex = numbersList.Count - 1;
+            
+            if (numbersList[1] - numbersList[0] == 1 || numbersList[0] - numbersList[1] == 1 ||
+                numbersList[lastListIndex] - numbersList[lastListIndex -1] == 1 || numbersList[lastListIndex - 1] - numbersList[lastListIndex] == 1)
+            {
+                Console.WriteLine("Consecutive");
+            }
+            else
+            {
+                Console.WriteLine("Not consecutive");
+            }
+            
+            
+        }
+    }
     class ListSorter
     {
         public static void sort()
@@ -312,7 +360,7 @@ namespace ConsoleApp
                 }
                 class main
                 {
-                    static void Main(string[] args)
+                    public static void Main(string[] args)
                     {
                         string operation;
                         do
@@ -330,7 +378,12 @@ namespace ConsoleApp
                             Console.WriteLine("Faculty of entered number press '7' and enter");
                             Console.WriteLine("Guess the random number '8' and enter");
                             Console.WriteLine("Find the maximum '9' and enter");
+                            Console.WriteLine("Type 'facebook' and enter to run the application");
+                            Console.WriteLine("Type 'reverse' and enter to run the application");
+                            Console.WriteLine("Type 'sort' and enter to run the application");
+                            Console.WriteLine("Type 'consecutive' to run the application");
                             Console.WriteLine("For 'How many numbers between 1 and 100 are divisible by 3' press '5' and enter");
+                            Console.WriteLine("Type 'duplicate' and press enter to run the application");
                             Console.WriteLine("Press 'x' to end the program.");
                             Console.WriteLine();
                             Console.Write("-------------> ");
@@ -387,6 +440,16 @@ namespace ConsoleApp
                                 case "sort":
                                     ListSorter.sort();
                                     break;
+
+                                case "consecutive":
+                                    Consecutive.consecutive();
+                                    break;
+
+                                case "duplicate":
+                                    Duplicate.duplicate();
+                                    break;
+
+
                             }
                         } while (operation != "x");
                     }
